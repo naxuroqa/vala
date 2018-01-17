@@ -344,6 +344,8 @@ NON_NULL_TESTS = \
 check-TESTS: $(TESTS) $(NON_NULL_TESTS)
 	@EXEEXT=$(EXEEXT) EXEEXT=$(EXEEXT) CFLAGS='$(CFLAGS)' CPPFLAGS='$(CPPFLAGS)' LDFLAGS='$(LDFLAGS)' $(srcdir)/testrunner.sh $(TESTS)
 	@EXEEXT=$(EXEEXT) EXEEXT=$(EXEEXT) CFLAGS='$(CFLAGS)' CPPFLAGS='$(CPPFLAGS)' LDFLAGS='$(LDFLAGS)' VALAFLAGS="--enable-experimental-non-null" $(srcdir)/testrunner.sh $(NON_NULL_TESTS)
+	@EXEEXT=$(EXEEXT) EXEEXT=$(EXEEXT) CFLAGS='$(CFLAGS)' CPPFLAGS='$(CPPFLAGS)' LDFLAGS='$(LDFLAGS)' VALAFLAGS="--abi-stability" $(srcdir)/testrunner.sh $(TESTS)
+	@EXEEXT=$(EXEEXT) EXEEXT=$(EXEEXT) CFLAGS='$(CFLAGS)' CPPFLAGS='$(CPPFLAGS)' LDFLAGS='$(LDFLAGS)' VALAFLAGS="--abi-stability --enable-experimental-non-null" $(srcdir)/testrunner.sh $(NON_NULL_TESTS)
 
 EXTRA_DIST = \
 	testrunner.sh \
