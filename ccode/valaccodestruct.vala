@@ -31,21 +31,31 @@ public class Vala.CCodeStruct : CCodeNode {
 	 */
 	public string name { get; set; }
 
-	public bool is_empty { get { return declarations.size == 0; } }
+	public bool is_empty { get { return nodes.size == 0; } }
 
-	private List<CCodeDeclaration> declarations = new ArrayList<CCodeDeclaration> ();
+	private List<CCodeNode> nodes = new ArrayList<CCodeNode> ();
 	
 	public CCodeStruct (string name) {
 		this.name = name;
 	}
 	
 	/**
+	 * Adds the specified comment inside this struct.
+	 *
+	 * @param comment a string comment
+	 */
+	public void add_comment (string comment) {
+		var c = new CCodeComment (comment);
+		nodes.add (c);
+	}
+
+	/**
 	 * Adds the specified declaration as member to this struct.
 	 *
 	 * @param decl a variable declaration
 	 */
 	public void add_declaration (CCodeDeclaration decl) {
-		declarations.add (decl);
+		nodes.add (decl);
 	}
 	
 	/**
@@ -65,8 +75,12 @@ public class Vala.CCodeStruct : CCodeNode {
 		writer.write_string ("struct ");
 		writer.write_string (name);
 		writer.write_begin_block ();
-		foreach (CCodeDeclaration decl in declarations) {
-			decl.write_declaration (writer);
+		foreach (CCodeNode node in nodes) {
+			if (node is CCodeDeclaration) {
+				((CCodeDeclaration) node).write_declaration (writer);
+			} else {
+				node.write (writer);
+			}
 		}
 
 		writer.write_end_block ();
