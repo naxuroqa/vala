@@ -113,7 +113,7 @@ public class Vala.FlowAnalyzer : CodeVisitor {
 			}
 		}
 
-		this.context = null;
+		//this.context = null;
 	}
 
 	public override void visit_source_file (SourceFile source_file) {

@@ -118,7 +118,7 @@ public class Vala.SemanticAnalyzer : CodeVisitor {
 		context.root.check (context);
 		context.accept (this);
 
-		this.context = null;
+		//this.context = null;
 	}
 
 	public override void visit_source_file (SourceFile file) {
