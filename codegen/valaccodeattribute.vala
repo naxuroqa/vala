@@ -57,6 +57,20 @@ public class Vala.CCodeAttribute : AttributeCache {
 		}
 	}
 
+	public string struct_name {
+		get {
+			if (_struct_name == null) {
+				if (ccode != null) {
+					_struct_name = ccode.get_string ("struct_cname");
+				}
+				if (_struct_name == null) {
+					_struct_name = get_default_struct_name ();
+				}
+			}
+			return _struct_name;
+		}
+	}
+
 	public string type_name {
 		get {
 			if (_type_name == null) {
@@ -558,6 +572,7 @@ public class Vala.CCodeAttribute : AttributeCache {
 
 	private string _name;
 	private string _const_name;
+	private string _struct_name;
 	private string _type_name;
 	private string _feature_test_macros;
 	private string _header_filenames;
@@ -751,6 +766,27 @@ public class Vala.CCodeAttribute : AttributeCache {
 			Report.error (node.source_reference, "Unresolved type reference");
 			return "";
 		}
+	}
+
+	private string get_default_struct_name () {
+		unowned DataType? data_type = node as DataType;
+
+		if (data_type is ObjectType) {
+			return get_ccode_name (((ObjectType) data_type).type_symbol);
+		} else if (data_type is ErrorType) {
+			return "GError";
+		} else if (data_type is ClassType) {
+			return "%sClass".printf (get_ccode_name (((ClassType) data_type).class_symbol));
+		} else if (data_type is InterfaceType) {
+			return get_ccode_type_name (((InterfaceType) data_type).interface_symbol);
+		} else if (data_type is ValueType && !data_type.nullable) {
+			return get_ccode_name (((ValueType) data_type).type_symbol);
+		} else if (node is CType) {
+			return ((CType) node).ctype_name;
+		}
+
+		Report.error (node.source_reference, "Type doesn't have a real struct");
+		return "";
 	}
 
 	private string get_default_header_filenames () {

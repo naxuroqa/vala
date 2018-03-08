@@ -44,6 +44,10 @@ namespace Vala {
 		return get_ccode_attribute(node).const_name;
 	}
 
+	public static string get_ccode_struct_name (CodeNode node) {
+		return get_ccode_attribute(node).struct_name;
+	}
+
 	public static string get_ccode_type_name (Interface iface) {
 		return get_ccode_attribute(iface).type_name;
 	}

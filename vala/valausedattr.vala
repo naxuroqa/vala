@@ -31,7 +31,7 @@ public class Vala.UsedAttr : CodeVisitor {
 
 	const string[] valac_default_attrs = {
 		"CCode", "type_signature", "default_value", "set_value_function", "type_id", "cprefix", "cheader_filename",
-		"marshaller_type_name", "get_value_function", "cname", "destroy_function", "lvalue_access",
+		"marshaller_type_name", "get_value_function", "cname", "struct_cname", "destroy_function", "lvalue_access",
 		"has_type_id", "instance_pos", "const_cname", "take_value_function", "copy_function", "free_function",
 		"param_spec_function", "has_target", "type_cname", "ref_function", "ref_function_void", "unref_function", "type",
 		"has_construct_function", "returns_floating_reference", "gir_namespace", "gir_version", "construct_function",
